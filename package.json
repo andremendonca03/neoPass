@@ -9,10 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/font": "^13.2.4",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
+    "firebase": "^9.18.0",
     "next": "13.2.4",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
-  }
+    "react-dom": "18.2.0",
+    "sass": "^1.59.3"
+  },
+  "main": "index.js",
+  "repository": "https://github.com/andremendonca03/neoPass.git",
+  "author": "Andre Mendonca <andremendonca.033@gmail.com>",
+  "license": "MIT"
 }
