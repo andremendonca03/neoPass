@@ -1,0 +1,50 @@
+@import 'mixins';
+
+.headerBg {
+  background-color: $color-w0;
+  box-shadow: 0px 2px 4px 0px $shadow-10;
+  backdrop-filter: blur(15px);
+  .header {
+    display: flex;
+    justify-content: center;
+    padding: 25px 10px;
+    &[data-home="true"] {
+      justify-content: space-between;
+    }
+    .headerLogo {
+      max-width: 197px;
+    }
+    .headerNav {
+      display: flex;
+      align-items: center;
+      justify-content: end;
+      a {
+        @include font(btn);
+        &:first-of-type {
+          position: relative;
+          margin-right: 40px;
+          &::after {
+            content: "";
+            width: 100%;
+            height: 1px;
+            background-color: $color-d0;
+            position: absolute;
+            left: 0px;
+            bottom: 0px;
+          }
+          &:hover {
+            color: $color-d1;
+            &::after {
+              background-color: $color-d1;
+            }
+          }
+        }
+        &:last-of-type {
+          @include button();
+        }
+      }
+    }
+  }
+  
+}
+
