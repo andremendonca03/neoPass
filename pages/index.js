@@ -1,13 +1,17 @@
 import React from "react";
 import { GlobalContext } from "@/GlobalContext";
-
+import Link from "next/link";
 
 const Index = () => {
-  
   const global = React.useContext(GlobalContext);
-  console.log(global.auth);
 
-  return <div>Indsexd</div>;
+  
+
+  return (
+    <>
+      <h1>Home</h1>
+    </>
+  );
 };
 
 export default Index;
