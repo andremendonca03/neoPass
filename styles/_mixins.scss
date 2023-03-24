@@ -1,0 +1,75 @@
+$color-m3: #BCA9E5;
+$color-m2: #A083E2;
+$color-m1: #7950E2;
+$color-m0: #5415D9;
+$color-m-1: #3B0CA6;
+$color-m-2: #24057A;
+$color-w0: #FFFFFF;
+$color-w-1: #E7E5EC;
+$color-w-2: #C8C1D7;
+$color-d1: #473965;
+$color-d0: #100130;
+$color-on: #69A033;
+$color-off: #A03333;
+
+$shadow-10: rgba(0,0,0, .1);
+
+@mixin font($type) {
+  @if $type == text {
+    font-family: var(--font-baloo);
+    font-size: 1.8rem;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: none;
+    line-height: 130%;
+    letter-spacing: 0.4px;
+  }
+  @else if $type == btn {
+    font-family: var(--font-baloo);
+    font-size: 2rem;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: uppercase;
+    line-height: 110%;
+    letter-spacing: 0px;
+
+  } @else if $type == emphasis {
+    font-family: var(--font-baloo);
+    font-size: 3.6rem;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: none;
+    line-height: 110%;
+    letter-spacing: 0.4px;
+  } @else if $type == title {
+    font-family: var(--font-baloo);
+    font-size: 6.4rem;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: none;
+    line-height: 90%;
+    letter-spacing: 0.2px;
+  } 
+}
+
+@mixin pageGrid() {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(10px, 1fr));
+  gap: 15px;
+  max-width: 1025px;
+  margin: 0px auto;
+}
+
+@mixin button() {
+  background-color: $color-m0;
+  color: $color-w0;
+  padding: 10px 40px;
+  border: 1px solid $color-m0;
+  border-radius: 5px;
+  transition: .3s;
+  @include font(btn);
+  &:hover {
+    background-color: $color-w0;
+    color: $color-m0;
+  }
+}
