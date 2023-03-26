@@ -20,6 +20,43 @@ export const GlobalStorage = ({ children }) => {
 
   const usersCollection = collection(db, "users");
 
+  function validateField(element) {
+    const field = element.name;
+    const error = element.nextElementSibling;
+
+    function isValidEmail() {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(element.value);
+    }
+    function isValidPassword() {
+      const long = element.value.length >= 6;
+      return long;
+    }
+    function isSamePasswords() {
+      const isSame = formPassword === element.value;
+      return isSame;
+    }
+
+    setFormValidity(prev => ({...prev, [`${field}`]: false}));
+
+    if (element.value === "") {
+      error.innerHTML = `Fill out the field`;
+      error.removeAttribute("hidden");
+    } else if (field === "email" && !isValidEmail()) {
+      error.innerHTML = `Enter a Valid Email Address`;
+      error.removeAttribute("hidden");
+    } else if (field === "password" && !isValidPassword()) {
+      error.innerHTML = `Password must have at least 6 characters`;
+      error.removeAttribute("hidden");
+    } else if (field === "confirmpassword" && !isSamePasswords()) {
+      error.innerHTML = `Passwords are different`;
+      error.removeAttribute("hidden");
+    } else {
+      error.setAttribute("hidden", "");
+      setFormValidity(prev => ({...prev, [`${field}`]: true}));
+    }
+  }
+
   return (
     <GlobalContext.Provider
       value={{
@@ -50,6 +87,7 @@ export const GlobalStorage = ({ children }) => {
         formValidity,
         setFormValidity,
         usersCollection,
+        validateField,
 
       }}
     >

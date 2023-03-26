@@ -3,16 +3,17 @@ import styles from "@/styles/SignUp.module.scss";
 import { GlobalContext } from '@/GlobalContext';
 
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import FormField from '@/components/FormField';
 
 const SignUp = () => {
   const global = React.useContext(GlobalContext);
+  const router = useRouter();
 
   async function handleSignUp(e) {
     e.preventDefault();
 
     const areFieldsValid = !Object.values(global.formValidity).includes(false);
-    console.log(areFieldsValid);
 
     if (areFieldsValid) {
       try {
@@ -22,11 +23,12 @@ const SignUp = () => {
           email: global.formEmail,
           password: global.formPassword,
           name: global.formName,
-          uid: user.id,
+          uid: user.uid,
           signedUp: new Date().toUTCString(),
           isEmailVerified: user.emailVerified,
         });
-        
+
+        router.push("/console");
       } catch(err) {
         if (err.message.includes("auth/invalid-email")) {
           window.alert("Invalid email. Please, enter a valid email address");
@@ -36,6 +38,10 @@ const SignUp = () => {
           window.alert(err.message);
         }
       }
+    } else {
+      const fields = Object.keys(global.formValidity);
+      const elements = fields.map(item => document.getElementsByName(item)[0]);
+      elements.forEach(item => global.validateField(item));
     }
   }
 

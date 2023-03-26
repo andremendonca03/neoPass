@@ -8,41 +8,8 @@ const FormField = ({label, type, state, setState}) => {
   const formattedLabel = label.toLowerCase().replace(" ", "");
 
   function handleChangeAndValidate(e) {
-    const field = e.target.name;
-    const error = e.target.nextElementSibling;
-
-    function isValidEmail() {
-      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return regex.test(e.target.value);
-    }
-    function isValidPassword() {
-      const long = e.target.value.length >= 6;
-      return long;
-    }
-    function isSamePasswords() {
-      const isSame = global.formPassword === e.target.value;
-      return isSame;
-    }
-
     setState(e.target.value);
-    global.setFormValidity(prev => ({...prev, [`${field}`]: false}));
-
-    if (e.target.value === "") {
-      error.innerHTML = `Fill out the field`;
-      error.removeAttribute("hidden");
-    } else if (field === "email" && !isValidEmail()) {
-      error.innerHTML = `Enter a Valid Email Address`;
-      error.removeAttribute("hidden");
-    } else if (field === "password" && !isValidPassword()) {
-      error.innerHTML = `Password must have at least 6 characters`;
-      error.removeAttribute("hidden");
-    } else if (field === "confirmpassword" && !isSamePasswords()) {
-      error.innerHTML = `Passwords are different`;
-      error.removeAttribute("hidden");
-    } else {
-      error.setAttribute("hidden", "");
-      global.setFormValidity(prev => ({...prev, [`${field}`]: true}));
-    }
+    global.validateField(e.target);
   }
 
   React.useEffect(() => {
