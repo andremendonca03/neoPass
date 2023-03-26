@@ -10,7 +10,6 @@ const Header = () => {
   const pathname = global.useRouter().pathname;
   const isHome = pathname === "/";
 
-  console.log(isHome);
   return (
     <>
       <header className={styles.headerBg}>
