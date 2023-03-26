@@ -7,23 +7,6 @@ const FormField = ({label, type, state, setState}) => {
 
   const formattedLabel = label.toLowerCase().replace(" ", "");
 
-  React.useEffect(() => {
-    const confirmField = document.querySelector("[data-error='confirmpassword']");
-
-    if (global.formConfirm.length >= 6) {
-      if (global.formPassword !== global.formConfirm) {
-        confirmField.innerHTML = `Passwords are different`;
-        confirmField.removeAttribute("hidden");
-        global.setFormValidity(prev => ({...prev, [`confirmpassword`]: false}));
-
-      } else {
-        confirmField.setAttribute("hidden", "");
-        global.setFormValidity(prev => ({...prev, [`confirmpassword`]: true}));
-      }
-    }
-  }, [global.formPassword, global.formConfirm]);
-
-
   function handleChangeAndValidate(e) {
     const field = e.target.name;
     const error = e.target.nextElementSibling;
@@ -37,20 +20,12 @@ const FormField = ({label, type, state, setState}) => {
       return long;
     }
     function isSamePasswords() {
-      if (field === "password") {
-        const isSame = global.formConfirm === e.target.value;
-        return isSame;
-      } else {
-        const isSame = global.formPassword === e.target.value;
-        return isSame;
-      }
+      const isSame = global.formPassword === e.target.value;
+      return isSame;
     }
 
     setState(e.target.value);
     global.setFormValidity(prev => ({...prev, [`${field}`]: false}));
-
-
-
 
     if (e.target.value === "") {
       error.innerHTML = `Fill out the field`;
@@ -61,10 +36,7 @@ const FormField = ({label, type, state, setState}) => {
     } else if (field === "password" && !isValidPassword()) {
       error.innerHTML = `Password must have at least 6 characters`;
       error.removeAttribute("hidden");
-    }/* else if (field === "password" && isValidPassword() && !isSamePasswords() && (global.formConfirm.length >= 6)) {
-      error.innerHTML = `Passwords are different`;
-      error.removeAttribute("hidden");
-    }*/ else if (field === "confirmpassword" && !isSamePasswords()) {
+    } else if (field === "confirmpassword" && !isSamePasswords()) {
       error.innerHTML = `Passwords are different`;
       error.removeAttribute("hidden");
     } else {
@@ -72,6 +44,22 @@ const FormField = ({label, type, state, setState}) => {
       global.setFormValidity(prev => ({...prev, [`${field}`]: true}));
     }
   }
+
+  React.useEffect(() => {
+    const confirmField = document.querySelector("[data-error='confirmpassword']");
+
+    if (confirmField && (global.formConfirm.length >= 6)) {
+      if (global.formPassword !== global.formConfirm) {
+        confirmField.innerHTML = `Passwords are different`;
+        confirmField.removeAttribute("hidden");
+        global.setFormValidity(prev => ({...prev, [`confirmpassword`]: false}));
+
+      } else {
+        confirmField.setAttribute("hidden", "");
+        global.setFormValidity(prev => ({...prev, [`confirmpassword`]: true}));
+      }
+    }
+  }, [global.formPassword, global.formConfirm]);
 
   return (
     <label htmlFor={formattedLabel} className={styles.formField}>

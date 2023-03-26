@@ -8,49 +8,33 @@ import FormField from '@/components/FormField';
 const SignUp = () => {
   const global = React.useContext(GlobalContext);
 
-  function checkName() {
-    return !!global.formName;
-  }
-
-  async function checkEmail() {
-
-  }
-
-  function checkPassword() {
-    const isSame = global.formPassword === global.formConfirm;
-
-    return true
-
-  }
-
-  function checkFields(e) {
+  async function handleSignUp(e) {
     e.preventDefault();
-    if (checkName() && checkEmail() && checkPassword()) {
-      handleSignUp();
-    } else {
-      window.alert("Please, fill out the form with valid information");
-    }
-  }
 
-  async function handleSignUp() {
-    try {
-      const {user} = await global.createUserWithEmailAndPassword(global.auth, global.formEmail, global.formPassword);
+    const areFieldsValid = !Object.values(global.formValidity).includes(false);
+    console.log(areFieldsValid);
 
-      await global.addDoc(global.usersCollection, {
-        email: global.formEmail,
-        password: global.formPassword,
-        name: global.formName,
-
-      });
-      
-    } catch(err) {
-      console.log(err.message);
-      if (err.message.includes("auth/invalid-email")) {
-        const error = document.querySelector(`[data-error="email"]`);
-        error.innerHTML = "Enter a valid email address";
-        error.style.display = "block";
-      } else {
-        window.alert(err.message);
+    if (areFieldsValid) {
+      try {
+        const {user} = await global.createUserWithEmailAndPassword(global.auth, global.formEmail, global.formPassword);
+  
+        await global.addDoc(global.usersCollection, {
+          email: global.formEmail,
+          password: global.formPassword,
+          name: global.formName,
+          uid: user.id,
+          signedUp: new Date().toUTCString(),
+          isEmailVerified: user.emailVerified,
+        });
+        
+      } catch(err) {
+        if (err.message.includes("auth/invalid-email")) {
+          window.alert("Invalid email. Please, enter a valid email address");
+        } else if (err.message.includes("auth/email-already-in-use")) {
+          window.alert("Email address already in use");
+        } else {
+          window.alert(err.message);
+        }
       }
     }
   }
@@ -59,7 +43,7 @@ const SignUp = () => {
     <>
       <section className={styles.signUpBg}>
         <div className={styles.signUp}>
-          <form className={styles.signUpForm} onSubmit={checkFields}>
+          <form className={styles.signUpForm} onSubmit={handleSignUp}>
             <h1 className={styles.formTitle}>
               Sign Up
             </h1>
@@ -71,7 +55,7 @@ const SignUp = () => {
 
             <FormField label="Confirm Password" type="text" state={global.formConfirm} setState={global.setFormConfirm} />
 
-            <button onClick={checkFields} className={styles.formBtn}>Sign Up</button>
+            <button onClick={handleSignUp} className={styles.formBtn}>Sign Up</button>
 
             <strong className={styles.formAlt}>Already have an account? <Link href="/login">Login</Link></strong>
           </form>

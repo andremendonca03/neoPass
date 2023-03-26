@@ -12,10 +12,10 @@ export const GlobalStorage = ({ children }) => {
   const [formPassword, setFormPassword] = useState("");
   const [formConfirm, setFormConfirm] = useState("");
   const [formValidity, setFormValidity] = useState({
-    name: null,
-    email: null,
-    password: null,
-    confirmpassword: null,
+    name: false,
+    email: false,
+    password: false,
+    confirmpassword: false,
   });
 
   const usersCollection = collection(db, "users");
