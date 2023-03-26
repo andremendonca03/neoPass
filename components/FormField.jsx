@@ -3,7 +3,7 @@ import styles from "@/styles/SignUp.module.scss";
 import { GlobalContext } from '@/GlobalContext';
 
 const FormField = ({label, type, state, setState}) => {
-  const global = React.useContext(GlobalContext)
+  const global = React.useContext(GlobalContext);
 
   const formattedLabel = label.toLowerCase().replace(" ", "");
 
@@ -27,6 +27,19 @@ const FormField = ({label, type, state, setState}) => {
       }
     }
   }, [global.formPassword, global.formConfirm]);
+
+  React.useEffect(() => {
+    function resetStates() {
+      setState("");
+      global.setFormValidity({
+        name: false,
+        email: false,
+        password: false,
+        confirmpassword: false,
+      });
+    }
+    return resetStates;
+  }, []);
 
   return (
     <label htmlFor={formattedLabel} className={styles.formField}>
