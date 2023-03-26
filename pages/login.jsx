@@ -7,11 +7,11 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import FormField from '@/components/FormField';
 
-const SignUp = () => {
+const Login = () => {
   const global = React.useContext(GlobalContext);
   const router = useRouter();
 
-  async function handleSignUp(e) {
+  async function handleLogin(e) {
     e.preventDefault();
 
     const areFieldsValid = !Object.values(global.formValidity).includes(false);
@@ -50,24 +50,20 @@ const SignUp = () => {
     <>
       <section className={styles.formBg}>
         <div className={styles.form}>
-          <form className={styles.formCard} onSubmit={handleSignUp}>
+          <form className={styles.formCard} onSubmit={handleLogin}>
             <h1 className={styles.cardTitle}>
-              Sign Up
+              Login
             </h1>
-            <FormField label="Name" type="text" state={global.formName} setState={global.setFormName} />
-
             <FormField label="Email" type="email" state={global.formEmail} setState={global.setFormEmail} />
 
             <FormField label="Password" type="text" state={global.formPassword} setState={global.setFormPassword} />
 
-            <FormField label="Confirm Password" type="text" state={global.formConfirm} setState={global.setFormConfirm} />
+            <button onClick={handleLogin} className={styles.cardBtn}>Login</button>
 
-            <button onClick={handleSignUp} className={styles.cardBtn}>Sign Up</button>
-
-            <strong className={styles.cardAlt}>Already have an account? <Link href="/login">Login</Link></strong>
+            <strong className={styles.cardAlt}>Don’t have an account? <Link href="/login">Sign Up</Link></strong>
           </form>
-          <div className={styles.signUpImage}>
-            <Image src="/signup-img.svg" alt='Woman in Purple signing up for NeoPass Password Management' width={410} height={286} />
+          <div className={styles.loginImage}>
+            <Image src="/login-img.svg" alt='Woman in Purple signing up for NeoPass Password Management' width={316} height={330} />
           </div>
         </div>
       </section>
@@ -75,4 +71,4 @@ const SignUp = () => {
   )
 }
 
-export default SignUp;
+export default Login;

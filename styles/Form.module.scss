@@ -1,19 +1,18 @@
 @import 'mixins';
 
-.signUpBg {
+.formBg {
   background-color: $color-w-1;
-  .signUp {
-    @include pageGrid();
+  .form {
+    @include pageFlex();
     padding: 80px 10px 60px 10px;
-    .signUpForm {
-      grid-column: 1 / 8;
-      max-width: 410px;
+    .formCard {
+      flex: 0 1 410px;
       background-color: $color-w0;
       padding: 25px;
       border-left: 1px solid $color-m0;
       border-radius: 10px;
       box-shadow: 2px 2px 4px 0px $shadow-10;
-      .formTitle {
+      .cardTitle {
         max-width: fit-content;
         margin: 0px auto 25px auto;
         @include font(emphasis);
@@ -37,11 +36,11 @@
       [data-error] {
         color: $color-off;
       }
-      .formBtn {
+      .cardBtn {
         @include button();
         margin: 10px auto 40px auto;
       }
-      .formAlt {
+      .cardAlt {
         display: block;
         max-width: fit-content;
         margin: 0px auto;
@@ -51,6 +50,25 @@
           color: $color-m0;
         }
       }
+    }
+    .signUpImage {
+      flex: 0 1 410px;
+      margin-top: 60px;
+    }
+    .loginImage {
+      flex: 0 1 316px;
+      margin-top: 40px;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .formBg .form {
+    flex-direction: column;
+    padding: 40px 10px;
+    .signUpImage, .loginImage {
+      flex: 0 0 auto;
+      margin-top: 25px;
     }
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "@/styles/SignUp.module.scss";
+import styles from "@/styles/Form.module.scss";
 import { GlobalContext } from '@/GlobalContext';
 
 const FormField = ({label, type, state, setState}) => {

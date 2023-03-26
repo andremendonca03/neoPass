@@ -52,6 +52,13 @@ $shadow-10: rgba(0,0,0, .1);
   } 
 }
 
+@mixin pageFlex() {
+  display: flex;
+  justify-content: space-around;
+  max-width: 1025px;
+  margin: 0px auto;
+}
+
 @mixin pageGrid() {
   display: grid;
   grid-template-columns: repeat(12, minmax(10px, 1fr));
