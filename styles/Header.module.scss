@@ -7,6 +7,7 @@
   .header {
     display: flex;
     justify-content: center;
+    align-items: center;
     padding: 25px 10px;
     &[data-home="true"] {
       justify-content: space-between;
@@ -45,6 +46,29 @@
       }
     }
   }
-  
 }
 
+@media only screen and (max-width: 600px) {
+  .headerBg .header {
+    padding: 15px 10px;
+    .headerNav {
+      flex-direction: column;
+      a:first-of-type {
+        margin-right: 0px;
+        margin-bottom: 15px;
+      }
+      a:last-of-type {
+        padding: 6px 25px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .headerBg .header {
+    .headerLogo {
+      max-width: 120px;
+      margin-right: 15px;
+    }
+  }
+}

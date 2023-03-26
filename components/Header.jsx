@@ -18,10 +18,14 @@ const Header = () => {
             <Image src="/logo.png" width={197} height={42} alt="neoPass Logo" />
           </Link>
           
-          <nav className={styles.headerNav}>
-            <Link href="/login">Login</Link>
-            <Link href="/signup">Sign Up</Link>
-          </nav>
+          {isHome && (
+            <>
+              <nav className={styles.headerNav}>
+                <Link href="/login">Login</Link>
+                <Link href="/signup">Sign Up</Link>
+              </nav>
+            </>
+          )}
         </div>
       </header>
     </>

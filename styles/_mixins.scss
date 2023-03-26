@@ -62,6 +62,7 @@ $shadow-10: rgba(0,0,0, .1);
 
 @mixin button() {
   background-color: $color-m0;
+  text-align: center;
   color: $color-w0;
   padding: 10px 40px;
   border: 1px solid $color-m0;
