@@ -2,19 +2,20 @@ import React from 'react';
 import styles from "@/styles/Form.module.scss";
 import { GlobalContext } from '@/GlobalContext';
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
 import FormField from '@/components/FormField';
 
 const SignUp = () => {
   const global = React.useContext(GlobalContext);
-  const router = useRouter();
+  const router = global.useRouter();
+
+  const [loading, setLoading] = React.useState(null);
 
   async function handleSignUp(e) {
     e.preventDefault();
 
     const areFieldsValid = !Object.values(global.formValidity).includes(false);
+
+    setLoading(true);
 
     if (areFieldsValid) {
       try {
@@ -42,8 +43,13 @@ const SignUp = () => {
     } else {
       const fields = Object.keys(global.formValidity);
       const elements = fields.map(item => document.getElementsByName(item)[0]);
-      elements.forEach(item => global.validateField(item));
+      elements.forEach(item => {
+        item.classList.remove("shake");
+        setTimeout(() => item.classList.add("shake"), 10);
+        global.validateField(item);
+      });
     }
+    setLoading(false);
   }
 
   return (
@@ -62,12 +68,21 @@ const SignUp = () => {
 
             <FormField label="Confirm Password" type="text" state={global.formConfirm} setState={global.setFormConfirm} />
 
-            <button onClick={handleSignUp} className={styles.cardBtn}>Sign Up</button>
+            {!loading && (
+              <button onClick={handleSignUp} className={styles.cardBtn}>
+                Sign Up
+              </button>
+            )}
+            {loading && (
+              <div className={styles.loaderWrapper}>
+                <span className={styles.loader}></span>
+              </div>
+            )}
 
-            <strong className={styles.cardAlt}>Already have an account? <Link href="/login">Login</Link></strong>
+            <strong className={styles.cardAlt}>Already have an account? <global.Link href="/login">Login</global.Link></strong>
           </form>
           <div className={styles.signUpImage}>
-            <Image src="/signup-img.svg" alt='Woman in Purple signing up for NeoPass Password Management' width={410} height={286} />
+            <global.Image src="/signup-img.svg" alt='Woman in Purple signing up for NeoPass Password Management' width={410} height={286} priority="true" />
           </div>
         </div>
       </section>
