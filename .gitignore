@@ -34,3 +34,6 @@ yarn-error.log*
 
 # bin
 /.bin
+
+# progress control
+progress-checklist.md
