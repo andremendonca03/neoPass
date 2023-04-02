@@ -2,18 +2,17 @@ import React from 'react';
 import styles from "@/styles/Form.module.scss";
 import { GlobalContext } from '@/GlobalContext';
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
 import FormField from '@/components/FormField';
+import ForgotPasswordModal from '@/components/ForgotPasswordModal';
 
 const Login = () => {
   const global = React.useContext(GlobalContext);
-  const router = useRouter();
+  const router = global.useRouter();
 
   async function handleLogin(e) {
     e.preventDefault();
 
+    global.setFormValidity(prev => ({...prev, name: true, confirmpassword: true}));
     const areFieldsValid = !Object.values(global.formValidity).includes(false);
 
     if (areFieldsValid) {
@@ -40,9 +39,13 @@ const Login = () => {
         }
       }
     } else {
-      const fields = Object.keys(global.formValidity);
+      const fields = ["email", "password"];
       const elements = fields.map(item => document.getElementsByName(item)[0]);
-      elements.forEach(item => global.validateField(item));
+      
+      elements.forEach(item => {
+        item.setAttribute("data-shake", "");
+        global.validateField(item);
+      });
     }
   }
 
@@ -60,10 +63,11 @@ const Login = () => {
 
             <button onClick={handleLogin} className={styles.cardBtn}>Login</button>
 
-            <strong className={styles.cardAlt}>Don’t have an account? <Link href="/login">Sign Up</Link></strong>
+            <strong className={styles.cardAlt}>Don’t have an account? <global.Link href="/signup">Sign Up</global.Link></strong>
           </form>
+          <ForgotPasswordModal />
           <div className={styles.loginImage}>
-            <Image src="/login-img.svg" alt='Woman in Purple signing up for NeoPass Password Management' width={316} height={330} />
+            <global.Image src="/login-img.svg" alt='Woman in Purple signing up for NeoPass Password Management' width={316} height={330} priority="true" />
           </div>
         </div>
       </section>
