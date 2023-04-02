@@ -1,14 +1,16 @@
 import React from 'react';
 import styles from "@/styles/Form.module.scss";
 import { GlobalContext } from '@/GlobalContext';
-
+import { FormContext } from '@/contexts/FormCtx';
 import FormField from '@/components/FormField';
 
 const SignUp = () => {
   const global = React.useContext(GlobalContext);
+  const formCtx = React.useContext(FormContext);
   const router = global.useRouter();
 
   const [loading, setLoading] = React.useState(null);
+  console.log(formCtx.abo)
 
   async function handleSignUp(e) {
     e.preventDefault();
