@@ -1,11 +1,12 @@
 import React from 'react';
 import styles from "@/styles/Form.module.scss";
 import { GlobalContext } from '@/GlobalContext';
-
+import { FormContext } from '@/contexts/FormCtx';
 import ForgotPassword from './ForgotPassword';
 
 const FormField = ({label, type, state, setState}) => {
   const global = React.useContext(GlobalContext);
+  const formCtx = React.useContext(FormContext);
   const router = global.useRouter();
 
   const formattedLabel = label.toLowerCase().replace(" ", "");
@@ -13,31 +14,31 @@ const FormField = ({label, type, state, setState}) => {
 
   function handleChangeAndValidate(e) {
     setState(e.target.value);
-    global.validateField(e.target);
+    formCtx.validateField(e.target);
   }
 
-  // Effect to check if passwords are the same
+  // Check if passwords are the same
   React.useEffect(() => {
     const confirmField = document.querySelector("[data-error='confirmpassword']");
 
-    if (confirmField && (global.formConfirm.length >= 6)) {
-      if (global.formPassword !== global.formConfirm) {
+    if (confirmField && (formCtx.formConfirm.length >= 6)) {
+      if (formCtx.formPassword !== formCtx.formConfirm) {
         confirmField.innerHTML = `Passwords are different`;
         confirmField.removeAttribute("hidden");
-        global.setFormValidity(prev => ({...prev, [`confirmpassword`]: false}));
+        formCtx.setFormValidity(prev => ({...prev, [`confirmpassword`]: false}));
 
       } else {
         confirmField.setAttribute("hidden", "");
-        global.setFormValidity(prev => ({...prev, [`confirmpassword`]: true}));
+        formCtx.setFormValidity(prev => ({...prev, [`confirmpassword`]: true}));
       }
     }
-  }, [global.formPassword, global.formConfirm]);
+  }, [formCtx.formPassword, formCtx.formConfirm]);
 
-  // Effect to reset fields validity states
+  // Reset fields validity states
   React.useEffect(() => {
     function resetStates() {
       setState("");
-      global.setFormValidity({
+      formCtx.setFormValidity({
         name: false,
         email: false,
         password: false,

@@ -3,83 +3,35 @@ import styles from "@/styles/Form.module.scss";
 import { GlobalContext } from '@/GlobalContext';
 import { FormContext } from '@/contexts/FormCtx';
 import FormField from '@/components/FormField';
+import FormBtn from '@/components/FormBtn';
 
 const SignUp = () => {
   const global = React.useContext(GlobalContext);
   const formCtx = React.useContext(FormContext);
-  const router = global.useRouter();
 
-  const [loading, setLoading] = React.useState(null);
-  console.log(formCtx.abo)
-
-  async function handleSignUp(e) {
-    e.preventDefault();
-
-    const areFieldsValid = !Object.values(global.formValidity).includes(false);
-
-    setLoading(true);
-
-    if (areFieldsValid) {
-      try {
-        const {user} = await global.createUserWithEmailAndPassword(global.auth, global.formEmail, global.formPassword);
-  
-        await global.addDoc(global.usersCollection, {
-          email: global.formEmail,
-          password: global.formPassword,
-          name: global.formName,
-          uid: user.uid,
-          signedUp: new Date().toUTCString(),
-          isEmailVerified: user.emailVerified,
-        });
-
-        router.push("/console");
-      } catch(err) {
-        if (err.message.includes("auth/invalid-email")) {
-          window.alert("Invalid email. Please, enter a valid email address");
-        } else if (err.message.includes("auth/email-already-in-use")) {
-          window.alert("Email address already in use");
-        } else {
-          window.alert(err.message);
-        }
-      }
-    } else {
-      const fields = Object.keys(global.formValidity);
-      const elements = fields.map(item => document.getElementsByName(item)[0]);
-      elements.forEach(item => {
-        item.classList.remove("shake");
-        setTimeout(() => item.classList.add("shake"), 10);
-        global.validateField(item);
-      });
-    }
-    setLoading(false);
-  }
+  // Set Loading state to false after mounting and umounting the component
+  React.useEffect(() => {
+    global.setLoading(false);
+    return () => global.setLoading(false);
+  }, []);
 
   return (
     <>
       <section className={styles.formBg}>
         <div className={styles.form}>
-          <form className={styles.formCard} onSubmit={handleSignUp}>
+          <form className={styles.formCard} onSubmit={(e) => formCtx.handleSignUp(e)}>
             <h1 className={styles.cardTitle}>
               Sign Up
             </h1>
-            <FormField label="Name" type="text" state={global.formName} setState={global.setFormName} />
+            <FormField label="Name" type="text" state={formCtx.formName} setState={formCtx.setFormName} />
 
-            <FormField label="Email" type="email" state={global.formEmail} setState={global.setFormEmail} />
+            <FormField label="Email" type="email" state={formCtx.formEmail} setState={formCtx.setFormEmail} />
 
-            <FormField label="Password" type="text" state={global.formPassword} setState={global.setFormPassword} />
+            <FormField label="Password" type="text" state={formCtx.formPassword} setState={formCtx.setFormPassword} />
 
-            <FormField label="Confirm Password" type="text" state={global.formConfirm} setState={global.setFormConfirm} />
+            <FormField label="Confirm Password" type="text" state={formCtx.formConfirm} setState={formCtx.setFormConfirm} />
 
-            {!loading && (
-              <button onClick={handleSignUp} className={styles.cardBtn}>
-                Sign Up
-              </button>
-            )}
-            {loading && (
-              <div className={styles.loaderWrapper}>
-                <span className={styles.loader}></span>
-              </div>
-            )}
+            <FormBtn />
 
             <strong className={styles.cardAlt}>Already have an account? <global.Link href="/login">Login</global.Link></strong>
           </form>
