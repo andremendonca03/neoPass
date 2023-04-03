@@ -14,10 +14,10 @@ const Header = () => {
     <>
       <header className={styles.headerBg}>
         <div className={`${styles.header}`} data-home={isHome}>
-          <Link href="/" className={styles.headerLogo} >
+          <Link href="/" className={styles.headerLogo}>
             <Image src="/logo.png" width={197} height={42} alt="neoPass Logo" />
           </Link>
-          
+
           {isHome && (
             <>
               <nav className={styles.headerNav}>
@@ -29,7 +29,7 @@ const Header = () => {
         </div>
       </header>
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

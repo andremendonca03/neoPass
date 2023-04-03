@@ -1,9 +1,23 @@
 import React, { useState } from "react";
 import { db, auth } from "@/firebase-config";
-import { collection, doc, getDocs, getDoc, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "firebase/auth";
+import {
+  collection,
+  doc,
+  getDocs,
+  getDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import Link from "next/link";
-import Image from 'next/image';
+import Image from "next/image";
 import { useRouter } from "next/router";
 
 export const GlobalContext = React.createContext();
@@ -12,8 +26,6 @@ export const GlobalStorage = ({ children }) => {
   const [loading, setLoading] = useState(null);
 
   const usersCollection = collection(db, "users");
-
-
 
   return (
     <GlobalContext.Provider
@@ -39,8 +51,6 @@ export const GlobalStorage = ({ children }) => {
         loading,
         setLoading,
         usersCollection,
-        
-        
       }}
     >
       {children}

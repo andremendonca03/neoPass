@@ -3,7 +3,7 @@ import { GlobalContext } from "@/GlobalContext";
 
 export const FormContext = React.createContext();
 
-export const FormContextProvider = ({children}) => {
+export const FormContextProvider = ({ children }) => {
   const global = React.useContext(GlobalContext);
   const router = global.useRouter();
 
@@ -38,7 +38,7 @@ export const FormContextProvider = ({children}) => {
       return isSame;
     }
 
-    setFormValidity(prev => ({...prev, [`${field}`]: false}));
+    setFormValidity((prev) => ({ ...prev, [`${field}`]: false }));
     error.removeAttribute("hidden");
 
     if (element.value === "") {
@@ -52,7 +52,7 @@ export const FormContextProvider = ({children}) => {
     } else {
       error.innerHTML = "";
       error.setAttribute("hidden", "");
-      setFormValidity(prev => ({...prev, [`${field}`]: true}));
+      setFormValidity((prev) => ({ ...prev, [`${field}`]: true }));
     }
   }
 
@@ -65,8 +65,12 @@ export const FormContextProvider = ({children}) => {
 
     if (areFieldsValid) {
       try {
-        const {user} = await global.createUserWithEmailAndPassword(global.auth, formEmail, formPassword);
-  
+        const { user } = await global.createUserWithEmailAndPassword(
+          global.auth,
+          formEmail,
+          formPassword
+        );
+
         await global.addDoc(global.usersCollection, {
           email: formEmail,
           password: formPassword,
@@ -78,7 +82,7 @@ export const FormContextProvider = ({children}) => {
         });
 
         router.push("/console");
-      } catch(err) {
+      } catch (err) {
         if (err.message.includes("auth/invalid-email")) {
           window.alert("Invalid email. Please, enter a valid email address");
         } else if (err.message.includes("auth/email-already-in-use")) {
@@ -90,10 +94,12 @@ export const FormContextProvider = ({children}) => {
       }
     } else {
       const fields = Object.keys(formValidity);
-      const elements = fields.map(item => document.getElementsByName(item)[0]);
+      const elements = fields.map(
+        (item) => document.getElementsByName(item)[0]
+      );
 
       global.setLoading(false);
-      elements.forEach(item => {
+      elements.forEach((item) => {
         item.classList.remove("shake");
         setTimeout(() => item.classList.add("shake"), 10);
         validateField(item);
@@ -110,17 +116,23 @@ export const FormContextProvider = ({children}) => {
 
     if (areFieldsValid) {
       try {
-        const {user} = await global.signInWithEmailAndPassword(global.auth, formEmail, formPassword);
+        const { user } = await global.signInWithEmailAndPassword(
+          global.auth,
+          formEmail,
+          formPassword
+        );
 
         const usersDocs = await global.getDocs(global.usersCollection);
-        const {ref} = usersDocs.docs.find(item => item.data().uid === user.uid);
-        
+        const { ref } = usersDocs.docs.find(
+          (item) => item.data().uid === user.uid
+        );
+
         await global.updateDoc(ref, {
           lastLogedIn: new Date().toUTCString(),
         });
 
         router.push("/console");
-      } catch(err) {
+      } catch (err) {
         if (err.message.includes("auth/user-not-found")) {
           window.alert("User not Found. Please review your email address.");
         } else if (err.message.includes("auth/wrong-password")) {
@@ -132,10 +144,12 @@ export const FormContextProvider = ({children}) => {
       }
     } else {
       const fields = ["email", "password"];
-      const elements = fields.map(item => document.getElementsByName(item)[0]);
+      const elements = fields.map(
+        (item) => document.getElementsByName(item)[0]
+      );
 
       global.setLoading(false);
-      elements.forEach(item => {
+      elements.forEach((item) => {
         item.classList.remove("shake");
         setTimeout(() => item.classList.add("shake"), 10);
         validateField(item);
@@ -144,33 +158,32 @@ export const FormContextProvider = ({children}) => {
   }
 
   return (
-    <FormContext.Provider value={{
-      formName,
-      setFormName,
-      formEmail,
-      setFormEmail,
-      formPassword,
-      setFormPassword,
-      formConfirm,
-      setFormConfirm,
-      formValidity,
-      setFormValidity,
-      validateField,
-      forgotPasswordModal,
-      setForgotPasswordModal,
-      isPasswordVisible,
-      setIsPasswordVisible,
-      forgotPasswordEmail,
-      setForgotPasswordEmail,
-      handleLogin,
-      handleSignUp,
-    }}>
+    <FormContext.Provider
+      value={{
+        formName,
+        setFormName,
+        formEmail,
+        setFormEmail,
+        formPassword,
+        setFormPassword,
+        formConfirm,
+        setFormConfirm,
+        formValidity,
+        setFormValidity,
+        validateField,
+        forgotPasswordModal,
+        setForgotPasswordModal,
+        isPasswordVisible,
+        setIsPasswordVisible,
+        forgotPasswordEmail,
+        setForgotPasswordEmail,
+        handleLogin,
+        handleSignUp,
+      }}
+    >
       {children}
     </FormContext.Provider>
-  )
-}
+  );
+};
 
-export const FormContextPathnames = [
-  "/signup",
-  "/login",
-]
+export const FormContextPathnames = ["/signup", "/login"];
