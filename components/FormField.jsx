@@ -3,6 +3,7 @@ import styles from "@/styles/Form.module.scss";
 import { GlobalContext } from '@/GlobalContext';
 import { FormContext } from '@/contexts/FormCtx';
 import ForgotPassword from './ForgotPassword';
+import ViewHideBtns from './ViewHideBtns';
 
 const FormField = ({label, type, state, setState}) => {
   const global = React.useContext(GlobalContext);
@@ -11,6 +12,7 @@ const FormField = ({label, type, state, setState}) => {
 
   const formattedLabel = label.toLowerCase().replace(" ", "");
   const isForgotPasswordField = router.pathname === "/login" && formattedLabel === "password";
+  const isViewHideField = formattedLabel === "password" || formattedLabel === "confirmpassword";
 
   function handleChangeAndValidate(e) {
     setState(e.target.value);
@@ -51,8 +53,11 @@ const FormField = ({label, type, state, setState}) => {
   return (
     <label htmlFor={formattedLabel} className={styles.formField}>
       {label}
+      {isViewHideField && <ViewHideBtns />}
+
       <input type={type} name={formattedLabel} value={state} onChange={handleChangeAndValidate} />
       <span data-error={formattedLabel} hidden></span>
+      
       {isForgotPasswordField && <ForgotPassword />}
     </label>
   )

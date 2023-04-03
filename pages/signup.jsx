@@ -20,18 +20,17 @@ const SignUp = () => {
       <section className={styles.formBg}>
         <div className={styles.form}>
           <form className={styles.formCard} onSubmit={(e) => formCtx.handleSignUp(e)}>
-            <h1 className={styles.cardTitle}>
-              Sign Up
-            </h1>
+            <h1 className={styles.cardTitle}>Sign Up</h1>
+            
             <FormField label="Name" type="text" state={formCtx.formName} setState={formCtx.setFormName} />
 
             <FormField label="Email" type="email" state={formCtx.formEmail} setState={formCtx.setFormEmail} />
 
-            <FormField label="Password" type="text" state={formCtx.formPassword} setState={formCtx.setFormPassword} />
+            <FormField label="Password" type="password" state={formCtx.formPassword} setState={formCtx.setFormPassword} />
 
-            <FormField label="Confirm Password" type="text" state={formCtx.formConfirm} setState={formCtx.setFormConfirm} />
+            <FormField label="Confirm Password" type="password" state={formCtx.formConfirm} setState={formCtx.setFormConfirm} />
 
-            <FormBtn />
+            <FormBtn type="signup" />
 
             <strong className={styles.cardAlt}>Already have an account? <global.Link href="/login">Login</global.Link></strong>
           </form>

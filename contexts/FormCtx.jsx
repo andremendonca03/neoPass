@@ -17,6 +17,7 @@ export const FormContextProvider = ({children}) => {
     password: false,
     confirmpassword: false,
   });
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [forgotPasswordModal, setForgotPasswordModal] = useState(false);
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
 
@@ -70,6 +71,7 @@ export const FormContextProvider = ({children}) => {
           email: formEmail,
           password: formPassword,
           name: formName,
+          id: "l",
           uid: user.uid,
           signedUp: new Date().toUTCString(),
           isEmailVerified: user.emailVerified,
@@ -84,10 +86,55 @@ export const FormContextProvider = ({children}) => {
         } else {
           window.alert(err.message);
         }
+        global.setLoading(false);
       }
     } else {
       const fields = Object.keys(formValidity);
       const elements = fields.map(item => document.getElementsByName(item)[0]);
+
+      global.setLoading(false);
+      elements.forEach(item => {
+        item.classList.remove("shake");
+        setTimeout(() => item.classList.add("shake"), 10);
+        validateField(item);
+      });
+    }
+  }
+
+  async function handleLogin(e) {
+    e.preventDefault();
+
+    const areFieldsValid = formValidity.email && formValidity.password;
+
+    global.setLoading(true);
+
+    if (areFieldsValid) {
+      try {
+        const {user} = await global.signInWithEmailAndPassword(global.auth, formEmail, formPassword);
+
+        const usersDocs = await global.getDocs(global.usersCollection);
+        const {ref} = usersDocs.docs.find(item => item.data().uid === user.uid);
+        
+        await global.updateDoc(ref, {
+          lastLogedIn: new Date().toUTCString(),
+        });
+
+        router.push("/console");
+      } catch(err) {
+        if (err.message.includes("auth/user-not-found")) {
+          window.alert("User not Found. Please review your email address.");
+        } else if (err.message.includes("auth/wrong-password")) {
+          window.alert("User could not login. Please review your password.");
+        } else {
+          window.alert(err.message);
+        }
+        global.setLoading(false);
+      }
+    } else {
+      const fields = ["email", "password"];
+      const elements = fields.map(item => document.getElementsByName(item)[0]);
+
+      global.setLoading(false);
       elements.forEach(item => {
         item.classList.remove("shake");
         setTimeout(() => item.classList.add("shake"), 10);
@@ -111,9 +158,11 @@ export const FormContextProvider = ({children}) => {
       validateField,
       forgotPasswordModal,
       setForgotPasswordModal,
+      isPasswordVisible,
+      setIsPasswordVisible,
       forgotPasswordEmail,
       setForgotPasswordEmail,
-
+      handleLogin,
       handleSignUp,
     }}>
       {children}

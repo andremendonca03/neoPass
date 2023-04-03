@@ -14,11 +14,9 @@ const ForgotPassword = () => {
   }
 
   return (
-    <>
-      <span className={styles.forgotPasswordBtn} onClick={openModal} >
-        Forgot Password?
-      </span>
-    </>
+    <span className={styles.forgotPasswordBtn} onClick={openModal} >
+      Forgot Password?
+    </span>
   )
 }
 
