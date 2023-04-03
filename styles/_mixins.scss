@@ -1,18 +1,18 @@
-$color-m3: #BCA9E5;
-$color-m2: #A083E2;
-$color-m1: #7950E2;
-$color-m0: #5415D9;
-$color-m-1: #3B0CA6;
-$color-m-2: #24057A;
-$color-w0: #FFFFFF;
-$color-w-1: #E7E5EC;
-$color-w-2: #C8C1D7;
+$color-m3: #bca9e5;
+$color-m2: #a083e2;
+$color-m1: #7950e2;
+$color-m0: #5415d9;
+$color-m-1: #3b0ca6;
+$color-m-2: #24057a;
+$color-w0: #ffffff;
+$color-w-1: #e7e5ec;
+$color-w-2: #c8c1d7;
 $color-d1: #473965;
 $color-d0: #100130;
-$color-on: #69A033;
-$color-off: #A03333;
+$color-on: #69a033;
+$color-off: #a03333;
 
-$shadow-10: rgba(0,0,0, .1);
+$shadow-10: rgba(0, 0, 0, 0.1);
 
 @mixin font($type) {
   @if $type == text {
@@ -23,8 +23,7 @@ $shadow-10: rgba(0,0,0, .1);
     text-transform: none;
     line-height: 130%;
     letter-spacing: 0.4px;
-  }
-  @else if $type == btn {
+  } @else if $type == btn {
     font-family: var(--font-baloo);
     font-size: 2rem;
     font-weight: 400;
@@ -32,7 +31,6 @@ $shadow-10: rgba(0,0,0, .1);
     text-transform: uppercase;
     line-height: 110%;
     letter-spacing: 0px;
-
   } @else if $type == emphasis {
     font-family: var(--font-baloo);
     font-size: 3.6rem;
@@ -49,7 +47,14 @@ $shadow-10: rgba(0,0,0, .1);
     text-transform: none;
     line-height: 90%;
     letter-spacing: 0.2px;
-  } 
+  }
+}
+
+@mixin pageFlex() {
+  display: flex;
+  justify-content: space-around;
+  max-width: 1025px;
+  margin: 0px auto;
 }
 
 @mixin pageGrid() {
@@ -67,7 +72,7 @@ $shadow-10: rgba(0,0,0, .1);
   padding: 10px 40px;
   border: 1px solid $color-m0;
   border-radius: 5px;
-  transition: .3s;
+  transition: 0.3s;
   @include font(btn);
   &:hover {
     background-color: $color-w0;

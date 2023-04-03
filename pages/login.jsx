@@ -3,9 +3,10 @@ import styles from "@/styles/Form.module.scss";
 import { GlobalContext } from "@/GlobalContext";
 import { FormContext } from "@/contexts/FormCtx";
 import FormField from "@/components/FormField";
+import ForgotPasswordModal from "@/components/ForgotPasswordModal";
 import FormBtn from "@/components/FormBtn";
 
-const SignUp = () => {
+const Login = () => {
   const global = React.useContext(GlobalContext);
   const formCtx = React.useContext(FormContext);
 
@@ -21,17 +22,9 @@ const SignUp = () => {
         <div className={styles.form}>
           <form
             className={styles.formCard}
-            onSubmit={(e) => formCtx.handleSignUp(e)}
+            onSubmit={(e) => formCtx.handleLogin(e)}
           >
-            <h1 className={styles.cardTitle}>Sign Up</h1>
-
-            <FormField
-              label="Name"
-              type="text"
-              state={formCtx.formName}
-              setState={formCtx.setFormName}
-            />
-
+            <h1 className={styles.cardTitle}>Login</h1>
             <FormField
               label="Email"
               type="email"
@@ -46,26 +39,20 @@ const SignUp = () => {
               setState={formCtx.setFormPassword}
             />
 
-            <FormField
-              label="Confirm Password"
-              type="password"
-              state={formCtx.formConfirm}
-              setState={formCtx.setFormConfirm}
-            />
-
-            <FormBtn type="signup" />
+            <FormBtn type="login" />
 
             <strong className={styles.cardAlt}>
-              Already have an account?{" "}
-              <global.Link href="/login">Login</global.Link>
+              Don’t have an account?{" "}
+              <global.Link href="/signup">Sign Up</global.Link>
             </strong>
           </form>
-          <div className={styles.signUpImage}>
+          <ForgotPasswordModal />
+          <div className={styles.loginImage}>
             <global.Image
-              src="/signup-img.svg"
+              src="/login-img.svg"
               alt="Woman in Purple signing up for NeoPass Password Management"
-              width={410}
-              height={286}
+              width={316}
+              height={330}
               priority="true"
             />
           </div>
@@ -75,4 +62,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;
