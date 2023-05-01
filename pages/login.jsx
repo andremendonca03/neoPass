@@ -47,7 +47,10 @@ const Login = () => {
               <global.Link href="/signup">Sign Up</global.Link>
             </strong>
           </form>
-          <ForgotPasswordModal />
+
+          {console.log(formCtx.forgotPasswordModal)}
+          {formCtx.forgotPasswordModal && <ForgotPasswordModal />}
+
           <div className={styles.loginImage}>
             <global.Image
               src="/login-img.svg"

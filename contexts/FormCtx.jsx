@@ -75,9 +75,9 @@ export const FormContextProvider = ({ children }) => {
           email: formEmail,
           password: formPassword,
           name: formName,
-          id: "l",
           uid: user.uid,
           signedUp: new Date().toUTCString(),
+          lastLogedIn: new Date().toUTCString(),
           isEmailVerified: user.emailVerified,
         });
 
@@ -157,6 +157,37 @@ export const FormContextProvider = ({ children }) => {
     }
   }
 
+  async function handleResetPassword(e) {
+    e.preventDefault();
+
+    console.log(e.target.querySelector("input"));
+
+    field = e.target.querySelector("input");
+    errorElement = e.target.querySelector("[data-error]");
+
+    global.setLoading(true);
+
+    if (field !== "") {
+      try {
+        await global.sendPasswordResetEmail(global.auth, forgotPasswordEmail);
+
+        setRequest(true);
+      } catch (error) {
+        if (error.message.includes("auth/invalid-email")) {
+          window.alert("Invalid email. Please, enter a valid email address.");
+        } else if (error.message.includes("auth/user-not-found")) {
+          window.alert("There are no users registered with this email.");
+        } else {
+          window.alert(error.message);
+        }
+      }
+    } else {
+      errorElement.innerHTML = "Fill out the field";
+    }
+
+    global.setLoading(false);
+  }
+
   return (
     <FormContext.Provider
       value={{
@@ -179,6 +210,7 @@ export const FormContextProvider = ({ children }) => {
         setForgotPasswordEmail,
         handleLogin,
         handleSignUp,
+        handleResetPassword,
       }}
     >
       {children}

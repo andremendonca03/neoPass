@@ -28,6 +28,16 @@ const FormBtn = ({ type }) => {
         </button>
       );
     }
+    if (type === "reset") {
+      return (
+        <button
+          type="submit"
+          className={styles.cardBtn}
+        >
+          Send Password Reset
+        </button>
+      );
+    }
   }
 
   if (global.loading) {

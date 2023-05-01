@@ -1,16 +1,12 @@
 import React from 'react';
 import styles from "@/styles/ForgotPassword.module.scss";
-import { GlobalContext } from '@/GlobalContext';
+import { FormContext } from '@/contexts/FormCtx';
 
 const ForgotPassword = () => {
-  const global = React.useContext(GlobalContext);
+  const formCtx = React.useContext(FormContext);
 
   function openModal() {
-    if (global.forgotPasswordModal) {
-      global.setForgotPasswordModal(false);
-    } else {
-      global.setForgotPasswordModal(true);
-    }
+    formCtx.setForgotPasswordModal(true);
   }
 
   return (
