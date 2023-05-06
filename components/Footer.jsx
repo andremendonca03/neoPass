@@ -27,6 +27,9 @@ const Footer = () => {
           </div>
         </nav>
       </div>
+      <p className={styles.footerCopy}>
+        Project Built by <global.Link href="https://andremendonca.me" target="_blank" rel="author" >Andre Mendonca</global.Link>.
+      </p>
     </footer>
   )
 }
