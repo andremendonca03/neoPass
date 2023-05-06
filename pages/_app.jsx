@@ -3,6 +3,7 @@ import "@/styles/globals.scss";
 import { GlobalStorage } from "@/GlobalContext";
 import ContextWrapper from "@/contexts/ContextWrapper";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const baloo_2 = Baloo_2({
   subsets: ["latin"],
@@ -16,9 +17,12 @@ export default function App({ Component, pageProps }) {
     <GlobalStorage>
       <div className={baloo_2.variable}>
         <Header />
+
         <ContextWrapper>
           <Component {...pageProps} />
         </ContextWrapper>
+        
+        <Footer />
       </div>
     </GlobalStorage>
   );
