@@ -5,15 +5,13 @@ import { FormContext } from "@/contexts/FormCtx";
 import FormBtn from "./FormBtn";
 
 const ForgotPasswordModal = () => {
-  const global = React.useContext(GlobalContext);
   const formCtx = React.useContext(FormContext);
-
-  const [successfulRequest, setSuccessfulRequest] = React.useState(false);
 
   function closeModal(e) {
     if (e.target === e.currentTarget) {
       formCtx.setForgotPasswordModal(false);
       formCtx.setForgotPasswordEmail("");
+      formCtx.setResetPasswordRequest(false);
     }
   }
 
@@ -33,7 +31,7 @@ const ForgotPasswordModal = () => {
       >
         <h2 className={styles.modalTitle}>Reset Password</h2>
 
-        {!successfulRequest && (
+        {!formCtx.resetPasswordRequest && (
           <>
             <label htmlFor="email" className={styles.modalField}>
               Enter your email address:
@@ -43,13 +41,12 @@ const ForgotPasswordModal = () => {
                 required
                 onChange={updateEmail}
               />
-              <span data-error hidden></span>
             </label>
             <FormBtn type="reset" />
           </>
         )}
 
-        {successfulRequest && (
+        {formCtx.resetPasswordRequest && (
           <p className={styles.successMessage}>
             Password reset request sent to your email!
           </p>

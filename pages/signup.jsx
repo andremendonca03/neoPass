@@ -65,8 +65,8 @@ const SignUp = () => {
             <global.Image
               src="/signup-img.svg"
               alt="Woman in Purple signing up for NeoPass Password Management"
-              width={410}
-              height={286}
+              width={452}
+              height={327}
               priority="true"
             />
           </div>

@@ -4,6 +4,7 @@
   background-color: $color-w-1;
   .form {
     @include pageFlex();
+    gap: 25px;
     padding: 80px 10px 60px 10px;
     .formCard {
       flex: 0 1 410px;
@@ -85,14 +86,14 @@
       }
     }
     .signUpImage {
-      flex: 0 1 410px;
+      flex: 0 1 452px;
       margin-top: 60px;
       & img {
         height: auto;
       }
     }
     .loginImage {
-      flex: 0 1 316px;
+      flex: 0 1 327px;
       margin-top: 40px;
       & img {
         height: auto;
@@ -142,14 +143,20 @@
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
   .formBg .form {
     flex-direction: column;
+    max-width: 500px;
     padding: 40px 10px;
-    .signUpImage,
+    .signUpImage, .loginImage {
+      max-height: 300px;
+      margin-top: 0px;
+      img {
+        height: 100%;
+      }
+    }
     .loginImage {
-      flex: 0 0 auto;
-      margin-top: 25px;
+      max-height: 400px;
     }
   }
 }

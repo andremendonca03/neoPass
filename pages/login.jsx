@@ -48,15 +48,14 @@ const Login = () => {
             </strong>
           </form>
 
-          {console.log(formCtx.forgotPasswordModal)}
           {formCtx.forgotPasswordModal && <ForgotPasswordModal />}
 
           <div className={styles.loginImage}>
             <global.Image
               src="/login-img.svg"
               alt="Woman in Purple signing up for NeoPass Password Management"
-              width={316}
-              height={330}
+              width={327}
+              height={448}
               priority="true"
             />
           </div>
