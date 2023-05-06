@@ -20,6 +20,8 @@ export const FormContextProvider = ({ children }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [forgotPasswordModal, setForgotPasswordModal] = useState(false);
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
+  const [resetPasswordRequest, setResetPasswordRequest] = React.useState(false);
+
 
   function validateField(element) {
     const field = element.name;
@@ -159,19 +161,19 @@ export const FormContextProvider = ({ children }) => {
 
   async function handleResetPassword(e) {
     e.preventDefault();
+    console.log(e.target);
 
     console.log(e.target.querySelector("input"));
 
-    field = e.target.querySelector("input");
-    errorElement = e.target.querySelector("[data-error]");
+    const field = e.target.querySelector("input");
 
     global.setLoading(true);
 
-    if (field !== "") {
+    if (field.value !== "") {
       try {
         await global.sendPasswordResetEmail(global.auth, forgotPasswordEmail);
 
-        setRequest(true);
+        setResetPasswordRequest(true);
       } catch (error) {
         if (error.message.includes("auth/invalid-email")) {
           window.alert("Invalid email. Please, enter a valid email address.");
@@ -181,8 +183,6 @@ export const FormContextProvider = ({ children }) => {
           window.alert(error.message);
         }
       }
-    } else {
-      errorElement.innerHTML = "Fill out the field";
     }
 
     global.setLoading(false);
@@ -208,6 +208,8 @@ export const FormContextProvider = ({ children }) => {
         setIsPasswordVisible,
         forgotPasswordEmail,
         setForgotPasswordEmail,
+        resetPasswordRequest,
+        setResetPasswordRequest,
         handleLogin,
         handleSignUp,
         handleResetPassword,
