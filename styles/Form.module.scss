@@ -4,6 +4,7 @@
   background-color: $color-w-1;
   .form {
     @include pageFlex();
+    gap: 25px;
     padding: 80px 10px 60px 10px;
     .formCard {
       flex: 0 1 410px;
@@ -60,31 +61,15 @@
       .loaderWrapper {
         max-width: fit-content;
         background-color: $color-m0;
-        padding: 10px 40px;
+        padding: 8px 40px;
         border: 1px solid $color-m0;
         border-radius: 5px;
         margin: 10px auto 40px auto;
       }
       .loader {
-        display: block;
-        width: 22px;
-        height: 22px;
-        background-color: transparent;
-        border: 5px solid $color-w0;
-        border-radius: 50px;
-        position: relative;
-        animation: loadingCircle linear 0.7s forwards infinite;
-        &::after {
-          content: "";
-          display: block;
-          width: 10px;
-          height: 10px;
-          background-color: $color-m0;
-          position: absolute;
-          top: -5px;
-          left: 50%;
-          translate: -50%;
-        }
+        width: 26px;
+        height: 26px;
+        animation: loadingSpinner linear 1s forwards infinite;
       }
       .cardAlt {
         display: block;
@@ -101,20 +86,37 @@
       }
     }
     .signUpImage {
-      flex: 0 1 410px;
+      flex: 0 1 452px;
       margin-top: 60px;
       & img {
         height: auto;
       }
     }
     .loginImage {
-      flex: 0 1 316px;
+      flex: 0 1 327px;
       margin-top: 40px;
       & img {
         height: auto;
       }
     }
   }
+}
+.cardBtn {
+  @include button();
+  margin: 0px auto;
+}
+.loaderWrapper {
+  max-width: fit-content;
+  background-color: $color-m0;
+  padding: 8px 40px;
+  border: 1px solid $color-m0;
+  border-radius: 5px;
+  margin: 0px auto;
+}
+.loader {
+  width: 26px;
+  height: 26px;
+  animation: loadingSpinner linear 1s forwards infinite;
 }
 
 @keyframes shakeErrorBox {
@@ -135,20 +137,26 @@
   }
 }
 
-@keyframes loadingCircle {
+@keyframes loadingSpinner {
   to {
     rotate: 360deg;
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
   .formBg .form {
     flex-direction: column;
+    max-width: 500px;
     padding: 40px 10px;
-    .signUpImage,
+    .signUpImage, .loginImage {
+      max-height: 300px;
+      margin-top: 0px;
+      img {
+        height: 100%;
+      }
+    }
     .loginImage {
-      flex: 0 0 auto;
-      margin-top: 25px;
+      max-height: 400px;
     }
   }
 }

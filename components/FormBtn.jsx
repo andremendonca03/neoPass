@@ -28,12 +28,28 @@ const FormBtn = ({ type }) => {
         </button>
       );
     }
+    if (type === "reset") {
+      return (
+        <button
+          type="submit"
+          className={styles.cardBtn}
+        >
+          Send Password Reset
+        </button>
+      );
+    }
   }
 
   if (global.loading) {
     return (
       <div className={styles.loaderWrapper}>
-        <span className={styles.loader}></span>
+        <global.Image
+          src="/logo-single-alt.svg"
+          alt="Loading Spinner"
+          width={26}
+          height={26}
+          className={styles.loader}
+        />
       </div>
     );
   }

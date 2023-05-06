@@ -2,6 +2,7 @@ import React from "react";
 import styles from "@/styles/Form.module.scss";
 import { GlobalContext } from "@/GlobalContext";
 import { FormContext } from "@/contexts/FormCtx";
+
 import FormField from "@/components/FormField";
 import FormBtn from "@/components/FormBtn";
 
@@ -64,8 +65,8 @@ const SignUp = () => {
             <global.Image
               src="/signup-img.svg"
               alt="Woman in Purple signing up for NeoPass Password Management"
-              width={410}
-              height={286}
+              width={452}
+              height={327}
               priority="true"
             />
           </div>

@@ -3,4 +3,6 @@
 
 body #__next {
   color: $color-d0;
+  position: relative;
+  overflow-x: hidden;
 }

@@ -2,6 +2,7 @@ import React from "react";
 import styles from "@/styles/Form.module.scss";
 import { GlobalContext } from "@/GlobalContext";
 import { FormContext } from "@/contexts/FormCtx";
+
 import FormField from "@/components/FormField";
 import ForgotPasswordModal from "@/components/ForgotPasswordModal";
 import FormBtn from "@/components/FormBtn";
@@ -46,13 +47,15 @@ const Login = () => {
               <global.Link href="/signup">Sign Up</global.Link>
             </strong>
           </form>
-          <ForgotPasswordModal />
+
+          {formCtx.forgotPasswordModal && <ForgotPasswordModal />}
+
           <div className={styles.loginImage}>
             <global.Image
               src="/login-img.svg"
               alt="Woman in Purple signing up for NeoPass Password Management"
-              width={316}
-              height={330}
+              width={327}
+              height={448}
               priority="true"
             />
           </div>

@@ -20,6 +20,8 @@ export const FormContextProvider = ({ children }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [forgotPasswordModal, setForgotPasswordModal] = useState(false);
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
+  const [resetPasswordRequest, setResetPasswordRequest] = React.useState(false);
+
 
   function validateField(element) {
     const field = element.name;
@@ -75,9 +77,9 @@ export const FormContextProvider = ({ children }) => {
           email: formEmail,
           password: formPassword,
           name: formName,
-          id: "l",
           uid: user.uid,
           signedUp: new Date().toUTCString(),
+          lastLogedIn: new Date().toUTCString(),
           isEmailVerified: user.emailVerified,
         });
 
@@ -157,6 +159,35 @@ export const FormContextProvider = ({ children }) => {
     }
   }
 
+  async function handleResetPassword(e) {
+    e.preventDefault();
+    console.log(e.target);
+
+    console.log(e.target.querySelector("input"));
+
+    const field = e.target.querySelector("input");
+
+    global.setLoading(true);
+
+    if (field.value !== "") {
+      try {
+        await global.sendPasswordResetEmail(global.auth, forgotPasswordEmail);
+
+        setResetPasswordRequest(true);
+      } catch (error) {
+        if (error.message.includes("auth/invalid-email")) {
+          window.alert("Invalid email. Please, enter a valid email address.");
+        } else if (error.message.includes("auth/user-not-found")) {
+          window.alert("There are no users registered with this email.");
+        } else {
+          window.alert(error.message);
+        }
+      }
+    }
+
+    global.setLoading(false);
+  }
+
   return (
     <FormContext.Provider
       value={{
@@ -177,8 +208,11 @@ export const FormContextProvider = ({ children }) => {
         setIsPasswordVisible,
         forgotPasswordEmail,
         setForgotPasswordEmail,
+        resetPasswordRequest,
+        setResetPasswordRequest,
         handleLogin,
         handleSignUp,
+        handleResetPassword,
       }}
     >
       {children}
