@@ -1,0 +1,33 @@
+@import 'mixins';
+
+.footerBg {
+  background: $color-d0;
+}
+
+.footer {
+  @include pageFlex();
+  justify-content: space-between;
+  padding: 40px 10px;
+  .footerLogo {
+    max-width: 197px;
+  }
+  .footerSocials {
+    display: flex;
+    flex-direction: column;
+    p {
+      @include font(text);
+      color: $color-w0;
+      text-align: end;
+      margin-bottom: 5px;
+    }
+    .socialsWrapper {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
